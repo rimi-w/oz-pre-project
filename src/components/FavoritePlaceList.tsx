@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import type { Place } from "../types/types";
 import PlaceCard from "./PlaceCard";
-import { getPlaceData } from "../api/getData";
+import { getUserPlaceData } from "../api/getData";
 
-function PlaceList() {
-  const [allPlaceList, setAllPlaceList] = useState<Place[]>([]);
+function FavoritePlaceList() {
+  const [userPlaceList, setUserPlaceList] = useState<Place[]>([]);
 
   useEffect(() => {
     const getPlaces = async () => {
-      setAllPlaceList(await getPlaceData());
+      setUserPlaceList(await getUserPlaceData());
     };
     getPlaces();
   }, []);
 
   return (
     <article className="flex flex-col items-center p-5 m-5 border rounded-4xl">
-      <h2 className="text-2xl font-extrabold p-5">맛집 목록</h2>
+      <h2 className="text-2xl font-extrabold p-5">내 맛집 목록</h2>
       <div className="flex justify-center flex-wrap gap-2.5">
-        {allPlaceList.map((place: Place) => (
+        {userPlaceList.map((place: Place) => (
           <PlaceCard key={place.id} place={place} />
         ))}
       </div>
@@ -25,4 +25,4 @@ function PlaceList() {
   );
 }
 
-export default PlaceList;
+export default FavoritePlaceList;

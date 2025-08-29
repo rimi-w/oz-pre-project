@@ -1,23 +1,16 @@
-import { useEffect, useState } from "react";
-import { getData } from "./api/getData";
-import type { Place } from "./types/types";
 import PlaceList from "./components/PlaceList";
+import FavoritePlaceList from "./components/FavoritePlaceList";
+import logo from "../src/assets/logo.png";
 
 function App() {
-  const [allPlaceList, setAllPlaceList] = useState<Place[]>([]);
-
-  useEffect(() => {
-    const getPlaces = async () => {
-      setAllPlaceList(await getData());
-    };
-    getPlaces();
-  }, []);
-
-  console.log(allPlaceList);
-
   return (
     <>
-      <PlaceList allPlaceList={allPlaceList} />
+      <div className="flex gap-5 justify-center m-10">
+        <img src={logo} className="w-[50px] invert rounded-full" />
+        <h1 className="text-4xl font-extrabold">Today's Restaurant</h1>
+      </div>
+      <FavoritePlaceList />
+      <PlaceList />
     </>
   );
 }
