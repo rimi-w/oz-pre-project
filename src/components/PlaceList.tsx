@@ -3,6 +3,7 @@ import type { Place } from "../types/types";
 import PlaceCard from "./PlaceCard";
 import { getPlaceData } from "../api/getData";
 import Loading from "./Loading";
+import { sortPlacesByDistance } from "../functions/loc";
 
 function PlaceList() {
   const [allPlaceList, setAllPlaceList] = useState<Place[]>([]);
@@ -12,6 +13,20 @@ function PlaceList() {
     setIsLoading(true);
     const getPlaces = async () => {
       setAllPlaceList(await getPlaceData());
+
+      function success(pos) {
+        const crd = pos.coords;
+
+        const sortPlaceList = sortPlacesByDistance(
+          allPlaceList,
+          crd.latitude,
+          crd.longitude
+        );
+
+        setAllPlaceList(sortPlaceList);
+      }
+
+      window.navigator.geolocation.getCurrentPosition(success);
       setIsLoading(false);
     };
     getPlaces();
