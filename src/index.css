@@ -55,3 +55,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@theme {
+  --animate-spin-slow: spin 2s ease-in-out infinite;
+  --animate-spin-reverse: spin-reverse 2s ease-in-out infinite;
+
+  @keyframes spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+}
