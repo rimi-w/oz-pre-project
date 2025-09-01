@@ -9,3 +9,9 @@ export type Place = {
   lon: number;
   description: string;
 };
+
+export interface DeleteConfirmModal {
+  setFavoritePlace: React.Dispatch<React.SetStateAction<boolean>>;
+  place: Place;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}

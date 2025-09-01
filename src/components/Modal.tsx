@@ -1,15 +1,11 @@
 import { deleteData } from "../api/deleteData";
-import type { Place } from "../types/types";
+import type { DeleteConfirmModal } from "../types/types";
 
 function Modal({
   setFavoritePlace,
   place,
   setIsModalOpen,
-}: {
-  setFavoritePlace: React.Dispatch<React.SetStateAction<boolean>>;
-  place: Place;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+}: DeleteConfirmModal) {
   const deleteFromFavoritePlace = async (placeId: string) => {
     await deleteData(placeId);
     setFavoritePlace(false);
