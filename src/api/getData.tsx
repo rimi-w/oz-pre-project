@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getPlaceData = async () => {
   try {
-    const res = await axios.get(`${baseUrl}/places`);
+    const res = await axios.get(`${BASE_URL}/places`);
     if (res) {
       const data = await res.data;
 
@@ -21,7 +21,7 @@ export const getPlaceData = async () => {
 
 export const getUserPlaceData = async () => {
   try {
-    const res = await axios.get(`${baseUrl}/users/places`);
+    const res = await axios.get(`${BASE_URL}/users/places`);
     if (res) {
       const data = await res.data;
 

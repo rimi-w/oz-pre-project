@@ -1,16 +1,38 @@
+import { useState } from "react";
+import { postData } from "../api/postData";
 import type { Place } from "../types/types";
+import Modal from "./Modal";
 
 function PlaceCard({ place }: { place: Place }) {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const [isFavoritePlace, setFavoritePlace] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  const addToFavoritePlace = async (place: Place) => {
+    await postData(place);
+    setFavoritePlace(true);
+  };
 
   return (
     <>
-      <div className="w-[250px] h-[150px] rounded-2xl overflow-hidden relative">
-        <img src={`${baseUrl}/${place.image.src}`} alt={place.image.alt} />
+      <div
+        onClick={() =>
+          isFavoritePlace ? setIsModalOpen(true) : addToFavoritePlace(place)
+        }
+        className="w-[250px] h-[150px] rounded-2xl overflow-hidden relative"
+      >
+        <img src={`${BASE_URL}/${place.image.src}`} alt={place.image.alt} />
         <div className="w-[100%] bg-[#00000092] text-center absolute bottom-0 py-1">
           {place.title}
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          setFavoritePlace={setFavoritePlace}
+          place={place}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </>
   );
 }

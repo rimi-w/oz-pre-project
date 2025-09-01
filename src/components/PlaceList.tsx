@@ -11,26 +11,34 @@ function PlaceList() {
 
   useEffect(() => {
     setIsLoading(true);
+
     const getPlaces = async () => {
-      setAllPlaceList(await getPlaceData());
+      try {
+        const placeData = await getPlaceData();
 
-      function success(pos) {
-        const crd = pos.coords;
+        if (placeData) {
+          window.navigator.geolocation.getCurrentPosition((pos) => {
+            const crd = pos.coords;
 
-        const sortPlaceList = sortPlacesByDistance(
-          allPlaceList,
-          crd.latitude,
-          crd.longitude
-        );
+            const sortPlaceList = sortPlacesByDistance(
+              placeData,
+              crd.latitude,
+              crd.longitude
+            );
 
-        setAllPlaceList(sortPlaceList);
+            setAllPlaceList(sortPlaceList);
+          });
+        } else throw new Error(`fail to get place list`);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
       }
-
-      window.navigator.geolocation.getCurrentPosition(success);
-      setIsLoading(false);
     };
+
     getPlaces();
   }, []);
+  console.log(allPlaceList);
 
   return (
     <article className="flex flex-col items-center p-5 m-5 border rounded-4xl">

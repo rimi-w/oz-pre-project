@@ -3,6 +3,7 @@ import type { Place } from "../types/types";
 import PlaceCard from "./PlaceCard";
 import { getUserPlaceData } from "../api/getData";
 import Loading from "./Loading";
+import { sortPlacesByDistance } from "../functions/loc";
 
 function FavoritePlaceList() {
   const [userPlaceList, setUserPlaceList] = useState<Place[]>([]);
@@ -10,12 +11,35 @@ function FavoritePlaceList() {
 
   useEffect(() => {
     setIsLoading(true);
+
     const getPlaces = async () => {
-      setUserPlaceList(await getUserPlaceData());
-      setIsLoading(false);
+      try {
+        const placeData = await getUserPlaceData();
+
+        if (placeData) {
+          window.navigator.geolocation.getCurrentPosition((pos) => {
+            const crd = pos.coords;
+
+            const sortPlaceList = sortPlacesByDistance(
+              placeData,
+              crd.latitude,
+              crd.longitude
+            );
+
+            setUserPlaceList(sortPlaceList);
+          });
+        } else throw new Error(`fail to get place list`);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     getPlaces();
   }, []);
+
+  console.log(userPlaceList);
 
   return (
     <article className="flex flex-col items-center p-5 m-5 border rounded-4xl">
