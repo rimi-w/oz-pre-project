@@ -3,15 +3,15 @@ import { postData } from "../api/postData";
 import type { Place } from "../types/types";
 import Modal from "./Modal";
 
-function PlaceCard({ place }: { place: Place }) {
-  const [isFavoritePlace, setFavoritePlace] = useState(false);
+function FavoritePlaceCard({ place }: { place: Place }) {
+  const [isFavoritePlace, setFavoritePlace] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const addToFavoritePlace = async (place: Place) => {
     await postData(place);
     setFavoritePlace(true);
-    location.reload();
+    // location.reload();
   };
 
   return (
@@ -38,4 +38,4 @@ function PlaceCard({ place }: { place: Place }) {
   );
 }
 
-export default PlaceCard;
+export default FavoritePlaceCard;

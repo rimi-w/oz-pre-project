@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Place } from "../types/types";
-import PlaceCard from "./PlaceCard";
 import { getUserPlaceData } from "../api/getData";
 import Loading from "./Loading";
 import { sortPlacesByDistance } from "../functions/loc";
+import FavoritePlaceCard from "./FavoritePlaceCard";
 
 function FavoritePlaceList() {
   const [userPlaceList, setUserPlaceList] = useState<Place[]>([]);
@@ -47,7 +47,7 @@ function FavoritePlaceList() {
       {isLoading && <Loading />}
       <div className="flex justify-center flex-wrap gap-2.5">
         {userPlaceList.map((place: Place) => (
-          <PlaceCard key={place.id} place={place} />
+          <FavoritePlaceCard key={place.id} place={place} />
         ))}
       </div>
     </article>

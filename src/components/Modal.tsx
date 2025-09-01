@@ -13,6 +13,7 @@ function Modal({
   const deleteFromFavoritePlace = async (placeId: string) => {
     await deleteData(placeId);
     setFavoritePlace(false);
+    location.reload();
   };
 
   return (
