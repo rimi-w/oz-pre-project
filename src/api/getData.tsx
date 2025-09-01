@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const place = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL || ``,
+});
 
 export const getPlaceData = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/places`);
+    const res = await place.get(`/places`);
     if (res) {
       const data = await res.data;
 
@@ -21,7 +23,7 @@ export const getPlaceData = async () => {
 
 export const getUserPlaceData = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/users/places`);
+    const res = await place.get(`/users/places`);
     if (res) {
       const data = await res.data;
 

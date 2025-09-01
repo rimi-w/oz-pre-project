@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { place } from "./getData";
 
 export const deleteData = async (id: string) => {
   try {
-    const res = await axios.delete(`${BASE_URL}/users/places/${id}`);
+    const res = await place.delete(`/users/places/${id}`);
     if (res) {
       console.log(res);
     } else {

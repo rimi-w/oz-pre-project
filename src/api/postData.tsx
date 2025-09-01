@@ -1,11 +1,9 @@
-import axios from "axios";
 import type { Place } from "../types/types";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { place } from "./getData";
 
 export const postData = async (newPlace: Place) => {
   try {
-    const res = await axios.post(`${BASE_URL}/users/places`, {
+    const res = await place.post(`/users/places`, {
       place: newPlace,
     });
     if (res) {
